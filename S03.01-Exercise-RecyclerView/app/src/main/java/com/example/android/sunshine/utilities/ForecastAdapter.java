@@ -17,7 +17,11 @@ import org.w3c.dom.Text;
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapterViewHolder> {
 
-    private class  ForecastAdapterViewHolder extends RecyclerView.ViewHolder{
+    public ForecastAdapter (){
+
+    }
+
+    public class  ForecastAdapterViewHolder extends RecyclerView.ViewHolder{
         public final TextView mWeatherTextView;
 
         ForecastAdapterViewHolder(View view){
@@ -43,7 +47,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     @Override
     public void onBindViewHolder(ForecastAdapterViewHolder holder, int position) {
-        holder.mWeatherTextView.setText(String.valueOf(position));
+        String weatherForThisDay = mWeatherData[position];
+
+        holder.mWeatherTextView.setText(weatherForThisDay);
     }
 
     @Override
@@ -53,8 +59,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         }else return mWeatherData.length;
     }
 
-    private setWeatherData (){
-        mWeatherData = new String[1];
+    public void setWeatherData ( String [] weatherData){
+      mWeatherData = weatherData;
+      notifyDataSetChanged();
 
     }
 }
