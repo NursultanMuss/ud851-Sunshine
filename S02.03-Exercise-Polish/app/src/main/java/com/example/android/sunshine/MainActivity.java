@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             String location = params[0];
+            mErrorTextView.setText(location);
             URL weatherRequestUrl = NetworkUtils.buildUrl(location);
 
             try {

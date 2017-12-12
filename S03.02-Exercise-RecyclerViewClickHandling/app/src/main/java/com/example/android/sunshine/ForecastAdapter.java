@@ -62,7 +62,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         @Override
         public void onClick(View view) {
             int clickedItem = getAdapterPosition();
-            mClickHandler.onClickMethod(String.valueOf(clickedItem));
+
+            mClickHandler.onClickMethod(mWeatherData[clickedItem]);
         }
     }
 
