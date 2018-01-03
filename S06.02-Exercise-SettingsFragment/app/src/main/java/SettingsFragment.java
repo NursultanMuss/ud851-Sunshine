@@ -35,16 +35,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     }
 
-    private void setPreferenceSummary(Preference preference, String value){
+    private void setPreferenceSummary(Preference preference, Object value){
+        String stringValue = value.toString();
+        String key = preference.getKey();
+
         if(preference instanceof ListPreference){
             ListPreference listPreference = (ListPreference) preference;
-            int prefIndex = listPreference.findIndexOfValue(value);
+            int prefIndex = listPreference.findIndexOfValue(stringValue);
             if (prefIndex >= 0) {
                 listPreference.setSummary(listPreference.getEntries()[prefIndex]);
             }
         }
         else if(preference instanceof EditTextPreference){
-            preference.setSummary(value);
+            preference.setSummary(stringValue);
         }
     }
 
@@ -53,11 +56,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         Preference preference = findPreference(key);
         if(preference != null){
             if(!(preference instanceof CheckBoxPreference)){
-                String value = sharedPreferences.getString(preference.getKey(),"");
-                preference.setSummary(value);
+               setPreferenceSummary(preference,sharedPreferences.getString(key, ""));
             }
         }
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

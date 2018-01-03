@@ -22,7 +22,7 @@ import android.view.MenuItem;
 /**
  * Loads the SettingsFragment and handles the proper behavior of the up button.
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity   {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
