@@ -95,7 +95,7 @@ public class SunshinePreferences {
         // TODO (1) Return the user's preferred location
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         /** This will be implemented in a future lesson **/
-        return sharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_label));
+        return sharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
     }
 
     /**
@@ -107,6 +107,9 @@ public class SunshinePreferences {
      */
     public static boolean isMetric(Context context) {
         // TODO (2) Return true if the user's preference for units is metric, false otherwise
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Boolean forUnits = sharedPreferences.getBoolean()
+        if()
         /** This will be implemented in a future lesson **/
         return true;
     }
