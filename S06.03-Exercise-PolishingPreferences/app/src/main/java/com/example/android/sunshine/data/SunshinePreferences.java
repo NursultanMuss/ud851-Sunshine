@@ -93,9 +93,10 @@ public class SunshinePreferences {
      */
     public static String getPreferredWeatherLocation(Context context) {
         // TODO (1) Return the user's preferred location
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         /** This will be implemented in a future lesson **/
-        return sharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        return sharedPreferences.getString(getResources.getString(R.string.pref_location_key), getString(R.string.pref_location_default));
     }
 
     /**
