@@ -32,7 +32,7 @@ import com.example.android.sunshine.data.WeatherContract;
 class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapterViewHolder> {
 
     //  TODO (14) Remove the mWeatherData declaration and the setWeatherData method
-    private String[] mWeatherData;
+
     //  TODO (1) Declare a private final Context field called mContext
 
     private final Context mContext;
@@ -102,14 +102,20 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
     @Override
     public void onBindViewHolder(ForecastAdapterViewHolder forecastAdapterViewHolder, int position) {
 //      TODO (5) Delete the current body of onBindViewHolder
+        int dateIndex = mCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATE);
+        int descriptionIndex = mCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID);
+        int highIndex = mCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP);
+        int lowIndex = mCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP);
+
 //      TODO (6) Move the cursor to the appropriate position
         mCursor.moveToPosition(position);
-//      TODO (7) Generate a weather summary with the date, description, high and low
-        long weatherDate = mCursor.getLong(Integer.parseInt(WeatherContract.WeatherEntry.COLUMN_DATE));
-        String weatherDescription = mCursor.getString(Integer.parseInt(WeatherContract.WeatherEntry.))
 
-        String weatherSummary ;
-        //String weatherForThisDay = mWeatherData[position];
+        long date = mCursor.getLong(dateIndex);
+        String description = mCursor.getString(descriptionIndex);
+        int
+//      TODO (7) Generate a weather summary with the date, description, high and low
+        String summary =
+
 //      TODO (8) Display the summary that you created above
         forecastAdapterViewHolder.weatherSummary.setText(weatherForThisDay);
     }
@@ -124,8 +130,8 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
     public int getItemCount() {
 //      TODO (9) Delete the current body of getItemCount
 //      TODO (10) If mCursor is null, return 0. Otherwise, return the count of mCursor
-        if (null == mWeatherData) return 0;
-        return mWeatherData.length;
+        if (null == mCursor) return 0;
+        return mCursor.getCount();
     }
 
     /**
@@ -141,6 +147,20 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
     }
 
 //  TODO (11) Create a new method that allows you to swap Cursors.
+    public Cursor swapCursor(Cursor c){
+        // check if this cursor is the same as the previous cursor (mCursor)
+        if (mCursor == c) {
+            return null; // bc nothing has changed
+        }
+        Cursor temp = mCursor;
+        this.mCursor = c; // new cursor value assigned
+
+        //check if this is a valid cursor, then update the cursor
+        if (c != null) {
+            this.notifyDataSetChanged();
+        }
+        return temp;
+    }
 //      TODO (12) After the new Cursor is set, call notifyDataSetChanged
 
     /**
@@ -166,7 +186,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         public void onClick(View v) {
             //  TODO (13) Instead of passing the String from the data array, use the weatherSummary text!
             int adapterPosition = getAdapterPosition();
-            String weatherForDay = mWeatherData[adapterPosition];
+            String weatherForDay = weatherSummary.toString();
             mClickHandler.onClick(weatherForDay);
         }
     }
