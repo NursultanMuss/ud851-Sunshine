@@ -50,17 +50,18 @@ public class MainActivity extends AppCompatActivity implements
 //      TODO (15) Remove the implements declaration for SharedPreferences change listener and methods
 //      TODO (20) Implement LoaderCallbacks<Cursor> instead of String[]
         ForecastAdapter.ForecastAdapterOnClickHandler,
-        LoaderManager.LoaderCallbacks<String[]>,
-        SharedPreferences.OnSharedPreferenceChangeListener {
+        LoaderManager.LoaderCallbacks<Cursor>{
 
     private final String TAG = MainActivity.class.getSimpleName();
 
 //  TODO (16) Create a String array containing the names of the desired data columns from our ContentProvider
+    String [] dataColumns;
 
 //  TODO (17) Create constant int values representing each column name's position above
+    int COLUMN_NAME_POSITION;
 
 //  TODO (37) Remove the error TextView
-    private TextView mErrorMessageDisplay;
+
 
     /*
      * This ID will be used to identify the Loader responsible for loading our weather forecast. In
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements
         mRecyclerView.setAdapter(mForecastAdapter);
 
 //      TODO (18) Call the showLoading method
+        showLoading();
 
         /*
          * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
@@ -169,8 +171,7 @@ public class MainActivity extends AppCompatActivity implements
          * SharedPreference has changed. Please note that we must unregister MainActivity as an
          * OnSharedPreferenceChanged listener in onDestroy to avoid any memory leaks.
          */
-        PreferenceManager.getDefaultSharedPreferences(this)
-                .registerOnSharedPreferenceChangeListener(this);
+
     }
 
     /**
@@ -209,66 +210,32 @@ public class MainActivity extends AppCompatActivity implements
      * @return Return a new Loader instance that is ready to start loading.
      */
     @Override
-    public Loader<String[]> onCreateLoader(int id, final Bundle loaderArgs) {
+    public Loader<Cursor> onCreateLoader(int id, final Bundle loaderArgs) {
 
 //      TODO (23) Remove the onStartLoading method declaration
 //      TODO (24) Remove the loadInBackground method declaration
 //      TODO (25) Remove the deliverResult method declaration
 //          TODO (22) If the loader requested is our forecast loader, return the appropriate CursorLoader
-        return new AsyncTaskLoader<String[]>(this) {
+        return new AsyncTaskLoader<Cursor>(this) {
 
             /* This String array will hold and help cache our weather data */
             String[] mWeatherData = null;
+            if()
 
-            /**
-             * Subclasses of AsyncTaskLoader must implement this to take care of loading their data.
-             */
-            @Override
-            protected void onStartLoading() {
-                if (mWeatherData != null) {
-                    deliverResult(mWeatherData);
-                } else {
-                    mLoadingIndicator.setVisibility(View.VISIBLE);
-                    forceLoad();
-                }
-            }
 
-            /**
-             * This is the method of the AsyncTaskLoader that will load and parse the JSON data
-             * from OpenWeatherMap in the background.
-             *
-             * @return Weather data from OpenWeatherMap as an array of Strings.
-             *         null if an error occurs
-             */
-            @Override
-            public String[] loadInBackground() {
 
-                URL weatherRequestUrl = NetworkUtils.getUrl(MainActivity.this);
 
-                try {
-                    String jsonWeatherResponse = NetworkUtils
-                            .getResponseFromHttpUrl(weatherRequestUrl);
-
-                    String[] simpleJsonWeatherData = OpenWeatherJsonUtils
-                            .getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
-
-                    return simpleJsonWeatherData;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            /**
-             * Sends the result of the load to the registered listener.
-             *
-             * @param data The result of the load
-             */
-            public void deliverResult(String[] data) {
-                mWeatherData = data;
-                super.deliverResult(data);
-            }
         };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 
 //  TODO (26) Change onLoadFinished parameter to a Loader<Cursor> instead of a Loader<String[]>
@@ -355,6 +322,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 //  TODO (34) Create a method called showLoading that shows the loading indicator and hides the data
+    private void showLoading(){
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+    }
 
     /**
      * This is where we inflate and set up the menu for this Activity.

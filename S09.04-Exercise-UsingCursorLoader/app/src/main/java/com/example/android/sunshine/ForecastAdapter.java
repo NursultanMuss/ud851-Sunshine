@@ -112,9 +112,10 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
 
         long date = mCursor.getLong(dateIndex);
         String description = mCursor.getString(descriptionIndex);
-        int
+        int highTemp = (int) mCursor.getFloat(highIndex);
+        int lowTemp = (int) mCursor.getFloat(lowIndex);
 //      TODO (7) Generate a weather summary with the date, description, high and low
-        String summary =
+        String weatherForThisDay = date + " - " + description + " - " + highTemp + " / " + lowTemp;
 
 //      TODO (8) Display the summary that you created above
         forecastAdapterViewHolder.weatherSummary.setText(weatherForThisDay);
@@ -134,32 +135,23 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         return mCursor.getCount();
     }
 
-    /**
-     * This method is used to set the weather forecast on a ForecastAdapter if we've already
-     * created one. This is handy when we get new data from the web but don't want to create a
-     * new ForecastAdapter to display it.
-     *
-     * @param weatherData The new weather data to be displayed.
-     */
-    public void setWeatherData(String[] weatherData) {
-        mWeatherData = weatherData;
-        notifyDataSetChanged();
-    }
+//    /**
+//     * This method is used to set the weather forecast on a ForecastAdapter if we've already
+//     * created one. This is handy when we get new data from the web but don't want to create a
+//     * new ForecastAdapter to display it.
+//     *
+//     * @param weatherData The new weather data to be displayed.
+//     */
+//    public void setWeatherData(String[] weatherData) {
+//        mWeatherData = weatherData;
+//        notifyDataSetChanged();
+//    }
 
 //  TODO (11) Create a new method that allows you to swap Cursors.
-    public Cursor swapCursor(Cursor c){
-        // check if this cursor is the same as the previous cursor (mCursor)
-        if (mCursor == c) {
-            return null; // bc nothing has changed
-        }
-        Cursor temp = mCursor;
-        this.mCursor = c; // new cursor value assigned
-
-        //check if this is a valid cursor, then update the cursor
-        if (c != null) {
-            this.notifyDataSetChanged();
-        }
-        return temp;
+    public void swapCursor(Cursor c){
+        mCursor = c;
+        // After the new Cursor is set, call notifyDataSetChanged
+        notifyDataSetChanged();
     }
 //      TODO (12) After the new Cursor is set, call notifyDataSetChanged
 
