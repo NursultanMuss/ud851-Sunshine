@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements
     private ProgressBar mLoadingIndicator;
 
     //  TODO (35) Remove the preference change flag
-    private static boolean PREFERENCES_HAVE_BEEN_UPDATED = false;
+//    private static boolean PREFERENCES_HAVE_BEEN_UPDATED = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements
 
 //      TODO (36) Remove the findViewById call for the error TextView
         /* This TextView is used to display errors and will be hidden if there are no errors */
-        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+//        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
         /*
          * The ProgressBar that will indicate to the user that we are loading data. It will be
@@ -217,6 +217,11 @@ public class MainActivity extends AppCompatActivity implements
 //      TODO (25) Remove the deliverResult method declaration
 //          TODO (22) If the loader requested is our forecast loader, return the appropriate CursorLoader
         return new AsyncTaskLoader<Cursor>(this) {
+
+            @Override
+            public Cursor loadInBackground() {
+                return null;
+            }
 
             /* This String array will hold and help cache our weather data */
             String[] mWeatherData = null;

@@ -43,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
 
 //  TODO (18) Create a String array containing the names of the desired data columns from our ContentProvider
+    String []
 //  TODO (19) Create constant int values representing each column name's position above
 //  TODO (20) Create a constant int to identify our loader used in DetailActivity
 
@@ -52,28 +53,48 @@ public class DetailActivity extends AppCompatActivity {
 //  TODO (15) Declare a private Uri field called mUri
 
 //  TODO (10) Remove the mWeatherDisplay TextView declaration
-    private TextView mWeatherDisplay;
+
 
 //  TODO (11) Declare TextViews for the date, description, high, low, humidity, wind, and pressure
+    private TextView mDate;
+    private TextView mDescription;
+    private TextView mHigh;
+    private TextView mLow;
+    private TextView mHumidity;
+    private TextView mWind;
+    private TextView mPressure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 //      TODO (12) Remove mWeatherDisplay TextView
-        mWeatherDisplay = (TextView) findViewById(R.id.tv_display_weather);
-//      TODO (13) Find each of the TextViews by ID
 
-//      TODO (14) Remove the code that checks for extra text
-        Intent intentThatStartedThisActivity = getIntent();
-        if (intentThatStartedThisActivity != null) {
-            if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
-                mForecastSummary = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT);
-                mWeatherDisplay.setText(mForecastSummary);
-            }
-        }
+//      TODO (13) Find each of the TextViews by ID
+        mDate = (TextView) findViewById(R.id.selected_days_date);
+        mDescription = (TextView) findViewById(R.id.selected_days_description);
+        mHigh = (TextView) findViewById(R.id.selected_days_high_temperature);
+        mLow = (TextView) findViewById(R.id.selected_days_low_temperature);
+        mHumidity = (TextView) findViewById(R.id.selected_days_humidity);
+        mWind = (TextView) findViewById(R.id.selected_days_wind);
+        mPressure = (TextView) findViewById(R.id.selected_days_pressure);
+
+
+////      TODO (14) Remove the code that checks for extra text
+//        Intent intentThatStartedThisActivity = getIntent();
+//        if (intentThatStartedThisActivity != null) {
+//            if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
+//                mForecastSummary = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT);
+//                mWeatherDisplay.setText(mForecastSummary);
+//            }
+//        }
 //      TODO (16) Use getData to get a reference to the URI passed with this Activity's Intent
+        Intent intentThatStartedThisActivity = getIntent();
+        Uri intentUri = intentThatStartedThisActivity.getData();
 //      TODO (17) Throw a NullPointerException if that URI is null
+        if(intentUri == null){
+            throw new NullPointerException("uri is null");
+        }
 //      TODO (35) Initialize the loader for DetailActivity
     }
 
